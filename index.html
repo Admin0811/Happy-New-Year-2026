@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Countdown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+
+    background-image: url("background-tet-015.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* tăng độ nét ảnh */
+    image-rendering: auto;
+    filter: saturate(1.05) contrast(1.05);
+
+    position: relative;
+    color: #fff;
+}
+
+
+
+    /* phủ tối nền */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    /* phủ thông minh: trên tối – dưới sáng */
+    background: radial-gradient(
+        circle at center,
+        rgba(0,0,0,0.25) 0%,
+        rgba(0,0,0,0.45) 60%,
+        rgba(0,0,0,0.65) 100%
+    );
+
+    z-index: 0;
+}
+
+.countdown-wrapper {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+
+    padding: 45px 55px;
+    border-radius: 20px;
+
+    /* kính mờ cao cấp */
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(4px);
+
+    /* tách khỏi nền */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+}
+
+
+
+    /* .countdown-wrapper {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+    } */
+
+    /* DÒNG CHỮ TRẮNG */
+    .title {
+        font-size: 42px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        letter-spacing: 2px;
+        color: #ffffff;
+    }
+
+    .countdown {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    /* BỘ ĐẾM MÀU ĐỎ THƯỜNG */
+    .time-box {
+        background: #b30000;
+        padding: 22px 28px;
+        border-radius: 12px;
+        min-width: 95px;
+    }
+
+    .time-box span {
+        font-size: 40px;
+        font-weight: bold;
+        display: block;
+        color: #ffffff;
+    }
+
+    .time-box small {
+        font-size: 13px;
+        margin-top: 6px;
+        display: block;
+        color: #ffe5e5;
+        letter-spacing: 1px;
+    }
+
+    @media (max-width: 600px) {
+        .title {
+            font-size: 28px;
+        }
+        .time-box span {
+            font-size: 28px;
+        }
+        .time-box {
+            padding: 16px;
+            min-width: 70px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="countdown-wrapper">
+    <div class="title">ĐẾM NGƯỢC CÒN LẠI</div>
+
+    <div class="countdown">
+        <div class="time-box">
+            <span id="days">00</span>
+            <small>NGÀY</small>
+        </div>
+        <div class="time-box">
+            <span id="hours">00</span>
+            <small>GIỜ</small>
+        </div>
+        <div class="time-box">
+            <span id="minutes">00</span>
+            <small>PHÚT</small>
+        </div>
+        <div class="time-box">
+            <span id="seconds">00</span>
+            <small>GIÂY</small>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 🔧 THỜI GIAN ĐẾM NGƯỢC
+    const targetDate = new Date("2025-12-29 21:56:00").getTime();
+
+    // 🔧 TRANG SẼ CHUYỂN KHI HẾT GIỜ
+    const redirectURL = "phaohoa.html";
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance <= 0) {
+            window.location.href = redirectURL;
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = String(days).padStart(2, "0");
+        document.getElementById("hours").innerText = String(hours).padStart(2, "0");
+        document.getElementById("minutes").innerText = String(minutes).padStart(2, "0");
+        document.getElementById("seconds").innerText = String(seconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
