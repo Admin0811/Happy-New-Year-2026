@@ -119,10 +119,37 @@ body {
   font-weight: bold;
   text-shadow: 1px 1px 2px black;
 }
+/* ========== RESPONSIVE MOBILE ========== */
+.app-scale {
+  width: 390px;               /* chuẩn iPhone */
+  margin: 0 auto;
+  transform-origin: top center;
+}
+
+/* Mobile */
+@media (max-width: 420px) {
+  .app-scale {
+    transform: scale(calc(100vw / 390));
+  }
+
+  body {
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+}
+
+/* Mobile rất nhỏ */
+@media (max-width: 360px) {
+  .app-scale {
+    transform: scale(0.9);
+  }
+}
+
 </style>
 </head>
 <body>
 
+<div class="app-scale">
 <div class="envelope-wrapper" id="lixi">
   <div class="envelope-flap"></div>
   <div class="seal">福</div>
@@ -132,7 +159,7 @@ body {
   <div class="envelope-body"></div>
   <div class="guide" id="guideText">Bấm vào để nhận lì xì</div>
 </div>
-
+</div>
 <script>
 const lixi = document.getElementById("lixi");
 const moneyImg = document.getElementById("moneyImg");
