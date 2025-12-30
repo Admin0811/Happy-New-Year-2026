@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lì Xì Tết 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+:root {
+  --red-main: #d40000;
+  --red-dark: #b30000;
+  --gold: #ffd700;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle, #4a0000, #1a0000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.envelope-wrapper {
+  position: relative;
+  width: 220px;
+  height: 320px;
+  perspective: 1200px;
+}
+
+.envelope-body {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 280px;
+  background: linear-gradient(135deg, var(--red-main), var(--red-dark));
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+  z-index: 2;
+  border: 2px solid var(--gold);
+  border-top: none;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 25px; /* Đã chỉnh khớp với thân bao */
+  width: 100%;
+  height: 90px;
+  background: var(--red-main);
+  border: 2px solid var(--gold);
+  border-radius: 15px 15px 0 0;
+  clip-path: polygon(0 0, 100% 0, 100% 20%, 50% 100%, 0 20%);
+  transform-origin: top;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 4;
+}
+
+.money-wrapper {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 190px;
+  z-index: 1;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.money-img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+.seal {
+  position: absolute;
+  top: 75px; 
+  left: 50%;
+  transform: translateX(-50%);
+  width: 65px;
+  height: 65px;
+  background: radial-gradient(circle, #fff2b0, var(--gold));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #8b0000;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 5;
+  transition: all 0.4s ease;
+  border: 2px solid #b38f00;
+}
+
+.open .envelope-flap {
+  transform: rotateX(160deg);
+  z-index: 0;
+}
+
+.open .money-wrapper {
+  transform: translate(-50%, -120px) rotate(-2deg);
+}
+
+.open .seal {
+  opacity: 0;
+  transform: translateX(-50%) scale(0.5);
+}
+
+.guide {
+  position: absolute;
+  bottom: -60px;
+  width: 100%;
+  text-align: center;
+  color: var(--gold);
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px black;
+}
+</style>
+</head>
+<body>
+
+<div class="envelope-wrapper" id="lixi">
+  <div class="envelope-flap"></div>
+  <div class="seal">福</div>
+  <div class="money-wrapper">
+    <img id="moneyImg" class="money-img" src="" alt="Tiền">
+  </div>
+  <div class="envelope-body"></div>
+  <div class="guide" id="guideText">Bấm vào để nhận lì xì</div>
+</div>
+
+<script>
+const lixi = document.getElementById("lixi");
+const moneyImg = document.getElementById("moneyImg");
+const guideText = document.getElementById("guideText");
+
+// --- CẤU HÌNH TỈ LỆ TẠI ĐÂY ---
+const lixiConfig = [
+  { img: "10k.jpg", weight: 70 },  // 70% ra tờ 20k
+  { img: "20k.jpg", weight: 20 },  // 25% ra tờ 50k
+  { img: "50k.jpg", weight: 1 }   // 5% ra tờ 500k
+];
+
+// Hàm chọn ngẫu nhiên dựa trên trọng số
+function getRandomLixi() {
+  const totalWeight = lixiConfig.reduce((acc, item) => acc + item.weight, 0);
+  let random = Math.random() * totalWeight;
+  
+  for (const item of lixiConfig) {
+    if (random < item.weight) return item.img;
+    random -= item.weight;
+  }
+}
+
+lixi.addEventListener("click", function() {
+  if (this.classList.contains("open")) return;
+
+  // Lấy ảnh dựa trên tỉ lệ
+  const resultImg = getRandomLixi();
+  moneyImg.src = resultImg;
+
+  this.classList.add("open");
+  guideText.innerText = "CHÚC MỪNG NĂM MỚI!";
+
+  confetti({
+    particleCount: 150,
+    spread: 70,
+    origin: { y: 0.7 },
+    colors: ['#ff0000', '#ffd700', '#ffffff']
+  });
+});
+</script>
+
+</body>
+</html>

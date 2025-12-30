@@ -2294,7 +2294,10 @@ const messages = [
   "🎆 Happy New Year 2026 🎆",
   "Chúc bạn An Khang – Thịnh Vượng",
   "Chúc bạn Thành Công – Hạnh Phúc",
-  "Năm mới nhiều may mắn và yêu thương!"
+  "Chúc bạn một năm mới bình an, may mắn và thành công.",
+  "Chúc bạn Tết này cười nhiều hơn lo, vui nhiều hơn mệt",
+  "Năm mới ít áp lực, nhiều may mắn, thật nhiều niềm vui.",
+  "Chúc bạn một cái Tết thật ấm và thật vui."
 ];
 
 const messageElement = document.querySelector("#newyear-messages h1");
@@ -2330,5 +2333,5 @@ setTimeout(() => {
 
 // Nút chuyển trang
 document.getElementById("go-page-btn").addEventListener("click", () => {
-  window.location.href = "https://example.com"; // đổi link tới trang bạn muốn
+  window.location.href = "lixi.html"; // đổi link tới trang bạn muốn
 });
